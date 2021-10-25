@@ -1,0 +1,21 @@
+{
+	"folders":
+	[
+		{
+			"path": "."
+		}
+	],
+	"build_systems":[
+		{
+			"name":"build",
+			"cmd":"javac -cp ${project_path}/bin -d ${project_path}/bin ${file}",
+			"variants":[
+				{
+					"name":"run",
+					"shell":true,
+					"cmd":["start","cmd","/c","java -cp ${project_path}/bin Main & pause"]
+				}
+			]
+		}
+	]
+}
