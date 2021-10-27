@@ -75,12 +75,15 @@ public class Main {
             switch(Integer.parseInt(s)) {
             case 1:
                 System.out.printf("LCM為 %d\n", GCDandLCM.lcm1(input.nextInt(), input.nextInt()));
+                input.nextLine();
                 break;
             case 2:
                 System.out.printf("LCM為 %d\n", GCDandLCM.lcm2(input.nextInt(), input.nextInt()));
+                input.nextLine();
                 break;
             case 3:
                 System.out.printf("LCM為 %d\n", GCDandLCM.lcm3(input.nextInt(), input.nextInt()));
+                input.nextLine();
                 break;
             default:
                 System.out.println("參數錯誤");
@@ -88,8 +91,29 @@ public class Main {
         });
 
         proccessor.addSubCommand("diam", s -> {
-            System.out.println()
-        })
+            System.out.println("請輸入層數");
+            Scanner input = new Scanner(System.in);
+            if(s.startsWith("R")){
+                Shape.printDiamR(input.nextInt());
+            }
+            else{
+                Shape.printDiamL(input.nextInt());
+            }
+            input.nextLine();
+        });
+
+        proccessor.addSubCommand("star", s -> {
+            System.out.println("請輸入層數");
+            Scanner input = new Scanner(System.in);
+            if(s.startsWith("R")){
+                Shape.printTriangleR(input.nextInt());
+            }
+            else{
+                Shape.printTriangleL(input.nextInt());
+            }
+            input.nextLine();
+        });
+
         Scanner input = new Scanner(System.in);
 
         String line;
