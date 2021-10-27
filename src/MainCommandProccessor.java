@@ -16,17 +16,13 @@ public class MainCommandProccessor implements CommandProccessor {
 
     @Override
     public void execute(String command){
-        String[] commands = command.split(" ", 2);
         for(String s : subCommands.keySet()){
-            if(s.equals(commands[0])){
-                if(commands.length < 2){
-                    subCommands.get(s).execute("");
-                }
-                else{
-                    subCommands.get(s).execute(commands[1]);
-                }
+            if(command.contains(s)){
+                subCommands.get(s).execute(command.replaceFirst(s, ""));
+                return;
             }
         }
+        System.out.println("查無此命令");
         return;
     }
 
