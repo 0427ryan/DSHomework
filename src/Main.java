@@ -1,9 +1,10 @@
 
 import java.util.Scanner;
+import java.util.LinkedList;
 
 public class Main {
 
-    private static int[] ints;
+    private static LinkedList<Integer> ints;
 
     public static void main(String[] args) {
         System.out.println("test");
@@ -22,11 +23,24 @@ public class Main {
         });
 
 
-        proccessor.addSubCommand("exit", (s) -> System.exit(0));
+        proccessor.addSubCommand("exit", s -> System.exit(0));
 
-        proccessor.addSubCommand("input", (s) -> setStrs(s));
+        proccessor.addSubCommand("input", s -> setStrs(s));
 
-        proccessor.addSubCommand("ms-a", (s)-> )
+        proccessor.addSubCommand("ms-a", s-> {
+            Sorts.mergeSort(ints, (a, b) -> a < b); 
+            for(int i : ints){
+                System.out.print(i + " ");
+            }
+            System.out.println();
+        });
+        proccessor.addSubCommand("ms-d", s-> {
+            Sorts.mergeSort(ints, (a, b) -> a > b);
+            for(int i : ints){
+                System.out.print(i + " ");
+            }
+            System.out.println();
+        });
         Scanner input = new Scanner(System.in);
 
         String line;
@@ -40,9 +54,9 @@ public class Main {
 
     public static void setStrs(String s){
         String[] strs = s.split(",");
-        this.ints = new int[strs.length];
+        ints = new LinkedList<>();
         for(int i = 0 ; i < strs.length ; i++){
-            ints[i] = Integer.parseInt(strs[i]);
+            ints.push(Integer.parseInt(strs[i]));
         }
     }
 }

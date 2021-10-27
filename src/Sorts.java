@@ -1,7 +1,7 @@
 
 import java.util.function.BiFunction;
 import java.util.List;
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class Sorts {
 
@@ -58,51 +58,55 @@ public class Sorts {
         }
     }
 
-    private static<T> List<T> merge(List<T> list1, List<T> list2, BiFunction<T, T, Boolean> o) {
-        List<T> ret = new ArrayList<>();
-        int index1 = 0, index2 = 0;
-        int retIndex = 0;
-        while(retIndex < list1.size() + list2.size()) {
-            if(o.apply(list1.get(index1), list2.get(index2))) {
-                ret.set(retIndex, list1.get(index1));
-                index1++;
-            } else {
-                ret.set(retIndex, list2.get(index2));
-                index2++;
+    private static <T> void merge(List<T> list, int index1, int index2, int index3, BiFunction<T, T, Boolean> o){
+        List<T> temp = new LinkedList<>();
+        int tempIndex1 = index1;
+        int tempIndex2 = index2;
+        while(tempIndex1 < index2 && tempIndex2 < index3){
+            if(o.apply(list.get(tempIndex1), list.get(tempIndex2))){
+                temp.add(list.get(tempIndex1));
+                tempIndex1++;
             }
-            retIndex++;
+            else{
+                temp.add(list.get(tempIndex2));
+                tempIndex2++;
+            }
+            System.out.println("temp :" + temp);
         }
-        return ret;
+        
+
+        if(tempIndex1 < index2){
+            temp.addAll(list.subList(tempIndex1, index2));
+        }
+        System.out.println(temp);
+        for(int i = 0 ; i < temp.size() ; i++){
+            list.set(index1 + i, temp.get(i));
+        }
     }
 
-    private static<T> List<T> mergeSort2(List<T> list, BiFunction<T, T, Boolean> o) {
-
-        System.out.println(list);
-
-        if(list.size() <= 1) {
-            return list;
+    private static<T> void mergeSort2(List<T> list, int a, int b, BiFunction<T, T, Boolean> o){
+        if(b - a < 1){
+            return;
         }
 
-        return merge(mergeSort2(list.subList(0, list.size() / 2), o),
-                     mergeSort2(list.subList(list.size() / 2, list.size()), o), o);
+        mergeSort2(list, a, (b + a) / 2, o);
+        mergeSort2(list, (b + a) / 2, a, o);
+        merge(list, a, (b + a) / 2, b, o);
     }
 
-    public static<T> void mergeSort(List<T> list, BiFunction<T, T, Boolean> o) {
-        List<T> list2 = mergeSort2(list, o);
-        for(int i = 0 ; i < list.size() ; i++) {
-            list.set(i, list2.get(i));
-        }
-        return;
+    public static<T> void mergeSort(List<T> arr, BiFunction<T, T, Boolean> o){
+        mergeSort2(arr, 0, arr.size(), o);
     }
+
 
     public static<T> void heapSort(List<T> list, BiFunction<T, T, Boolean> o) {
-        for(int i = list.size() - 1 ; i >= 0 ; i--){
+        for(int i = list.size() - 1 ; i >= 0 ; i--) {
             heapify(list, i, list.size() - 1, o);
         }
 
         list.forEach(System.out::println);
 
-        for(int i = list.size() - 1 ; i >= 0 ; ){
+        for(int i = list.size() - 1 ; i >= 0 ; ) {
             T temp = list.get(0);
             list.set(0, list.get(i));
             list.set(i, temp);

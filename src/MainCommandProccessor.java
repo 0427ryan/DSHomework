@@ -19,7 +19,12 @@ public class MainCommandProccessor implements CommandProccessor {
         String[] commands = command.split(" ", 2);
         for(String s : subCommands.keySet()){
             if(s.equals(commands[0])){
-                subCommands.get(s).execute(commands[1]);
+                if(commands.length < 2){
+                    subCommands.get(s).execute("");
+                }
+                else{
+                    subCommands.get(s).execute(commands[1]);
+                }
             }
         }
         return;
