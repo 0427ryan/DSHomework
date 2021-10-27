@@ -58,43 +58,41 @@ public class Sorts {
         }
     }
 
-    private static <T> void merge(List<T> list, int index1, int index2, int index3, BiFunction<T, T, Boolean> o){
+    private static <T> void merge(List<T> list, int index1, int index2, int index3, BiFunction<T, T, Boolean> o) {
         List<T> temp = new LinkedList<>();
         int tempIndex1 = index1;
         int tempIndex2 = index2;
-        while(tempIndex1 < index2 && tempIndex2 < index3){
-            if(o.apply(list.get(tempIndex1), list.get(tempIndex2))){
+
+        while(tempIndex1 < index2 && tempIndex2 < index3) {
+            if(o.apply(list.get(tempIndex1), list.get(tempIndex2))) {
                 temp.add(list.get(tempIndex1));
                 tempIndex1++;
-            }
-            else{
+            } else {
                 temp.add(list.get(tempIndex2));
                 tempIndex2++;
             }
-            System.out.println("temp :" + temp);
-        }
-        
 
-        if(tempIndex1 < index2){
+
+        }
+        if(tempIndex1 < index2) {
             temp.addAll(list.subList(tempIndex1, index2));
         }
-        System.out.println(temp);
-        for(int i = 0 ; i < temp.size() ; i++){
+        for(int i = 0 ; i < temp.size() ; i++) {
             list.set(index1 + i, temp.get(i));
         }
     }
 
-    private static<T> void mergeSort2(List<T> list, int a, int b, BiFunction<T, T, Boolean> o){
-        if(b - a < 1){
+    private static<T> void mergeSort2(List<T> list, int a, int b, BiFunction<T, T, Boolean> o) {
+        if(b - a <= 1) {
             return;
         }
 
         mergeSort2(list, a, (b + a) / 2, o);
-        mergeSort2(list, (b + a) / 2, a, o);
+        mergeSort2(list, (b + a) / 2, b, o);
         merge(list, a, (b + a) / 2, b, o);
     }
 
-    public static<T> void mergeSort(List<T> arr, BiFunction<T, T, Boolean> o){
+    public static<T> void mergeSort(List<T> arr, BiFunction<T, T, Boolean> o) {
         mergeSort2(arr, 0, arr.size(), o);
     }
 
