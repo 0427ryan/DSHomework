@@ -1,6 +1,7 @@
 
 import java.util.Scanner;
 import java.util.LinkedList;
+import java.util.Map;
 
 public class Main {
 
@@ -112,6 +113,23 @@ public class Main {
                 Shape.printTriangleL(input.nextInt());
             }
             input.nextLine();
+        });
+
+        proccessor.addSubCommand("factor", s->{
+            System.out.println("請輸入整數");
+            Scanner input = new Scanner(System.in);
+            Map<Integer, Integer> map = s.contains("R") ? Factor.factorR(input.nextInt()) : Factor.factorL(input.nextInt()); 
+            int count = 0;
+            for(Integer i : map.keySet()){
+                System.out.print(i + " ^ " + map.get(i));
+                count++;
+                if(count < map.size()){
+                    System.out.print(" * ");
+                }
+            }
+            input.nextLine();
+            System.out.println();
+            return;
         });
 
         Scanner input = new Scanner(System.in);
