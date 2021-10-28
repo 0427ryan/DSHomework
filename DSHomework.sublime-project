@@ -14,6 +14,10 @@
 					"name":"run",
 					"shell":true,
 					"cmd":["start","cmd","/c","java -cp ${project_path}/bin Main & pause"]
+				},
+				{
+					"name":"compile-all",
+					"cmd":"javac -cp ${project_path}/bin -d ${project_path}/bin *.java",
 				}
 			]
 		}
