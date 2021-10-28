@@ -17,7 +17,14 @@
 				},
 				{
 					"name":"compile-all",
-					"cmd":"javac -cp ${project_path}/bin -d ${project_path}/bin *.java",
+					"cmd":["javac","-cp","bin","-d","bin","src/*.java"],
+					"working_dir":"$project_path"
+				},
+				{
+					"name":"clean",
+					"shell":true,
+					"cmd":["rmdir","/S","/Q","bin"],
+					"working_dir":"$project_path"
 				}
 			]
 		}
